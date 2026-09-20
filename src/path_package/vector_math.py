@@ -26,6 +26,7 @@ from sympy.simplify.simplify import simplify
 from sympy.core.function import expand
 from sympy.polys.polytools import factor
 from sympy.simplify.radsimp import radsimp
+from typing import Any
 
 """
 A note on type hinting...
@@ -53,9 +54,9 @@ class Vector:
     """
     def __init__(
             self,
-            i: Any #1
-            j: Any #1 
-            k: Any #1
+            i: Any, #1
+            j: Any, #1 
+            k: Any, #1
             ) -> None:
         """The initialization of the class Vector"""
         self.i = i
