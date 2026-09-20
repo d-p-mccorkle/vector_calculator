@@ -16,4 +16,4 @@ Python 3.13.14 or higher.
 ## Contact (also in toml):
 Dalton McCorkle\
 d-p-mccorkle\
-dpmccorkle@proton.me\
+dpmccorkle@proton.me
