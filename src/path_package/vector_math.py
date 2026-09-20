@@ -38,14 +38,19 @@ class Vector:
     This is the class for vector objects.  Vecors contain an i, j,
     and k component, which can be positive or negative.
     """
-    def __init__(self, i, j, k):
+    def __init__(
+            self,
+            i: float | int | str,
+            j: float | int | str,
+            k: float | int | str
+            ) -> None:
         """The initialization of the class Vector"""
         self.i = i
         self.j = j
         self.k = k
         self.component = (self.i, self.j, self.k)
 
-    def mag_square(self):
+    def mag_square(self) -> float | int | str:
         """
         A method for determining the squared magnitude of a vector
         """
@@ -55,7 +60,7 @@ class Vector:
         mag_square = i_comp+j_comp+k_comp
         return mag_square
 
-    def magnitude(self):
+    def magnitude(self) -> float | int | str:
         """A method to determine the magnitude of a vector"""
         i_comp = pow(self.i, 2)
         j_comp = pow(self.j, 2)
@@ -64,7 +69,7 @@ class Vector:
         magnitude = sqrt((i_comp+j_comp+k_comp))
         return magnitude
 
-    def unit_vector(self):
+    def unit_vector(self) -> tuple:
         """
         A method to form a tuple representing the unit vector
         associated with a given Vector.  Used to create such an object
@@ -78,14 +83,14 @@ class Vector:
         return unit_vector
 
 
-    def scalar(self, scalar):
+    def scalar(self, scalar: float | int | str) -> tuple:
         """A method for applying scalar multiplication"""
         self.i *= scalar
         self.j *= scalar
         self.k *= scalar
         self.component = (self.i, self.j, self.k)
 
-    def __str__(self):
+    def __str__(self) -> str:
         """"A method for string formation"""
         return f"<{self.i}i, {self.j}j, {self.k}k>"
 
@@ -112,12 +117,12 @@ class CrossProductDeterminant:
 
 
 #Functions
-def dot(v1, v2):
+def dot(v1: Vector, v2: Vector) -> float | int | str:
     """A function used to compute dot products"""
     dot_prod =  (v1.i*v2.i) + (v1.j*v2.j) + (v1.k*v2.k)
     return dot_prod
 
-def angle_between(v1, v2):
+def angle_between(v1: Vector, v2: Vector) -> float | int | str:
     """A method used to find the angle between two vectors"""
     mags_mul = v1.magnitude() * v2.magnitude()
     dot_prod = dot(v1, v2)
@@ -125,13 +130,13 @@ def angle_between(v1, v2):
     theta = acos(cos_theta)
     return theta
 
-def ortho_check(v1, v2):
+def ortho_check(v1: Vector, v2: Vector) -> bool:
     """A function for checking if two vectors are orthogonal"""
     if dot(v1, v2) == 0:
         return True
     return False
 
-def proj(v1, v2):
+def proj(v1: Vector, v2: Vector) -> Vector:
     """A function used to project v1 onto v2"""
     dot_prod = dot(v1, v2)
     v2_mag_sq = v2.mag_square()
@@ -141,7 +146,7 @@ def proj(v1, v2):
     proj_v1_on_v2.scalar(scalar_comp)
     return proj_v1_on_v2
 
-def work_by_dot(v1, v2):
+def work_by_dot(v1: Vector, v2: Vector) -> float | int | str:
     """
     A function used to compute work when the angle between vectors is
     not known.  Note that this function is somewhat redundant, but in
@@ -150,7 +155,11 @@ def work_by_dot(v1, v2):
     work = dot(v1, v2)
     return work
 
-def work_by_angle(v1, v2, theta):
+def work_by_angle(
+        v1: Vector,
+        v2: Vector,
+        theta: float | int | str
+        ) -> float | int |str:
     """
     A function used to compute the work done when the angle between two
     vectors is known
@@ -158,7 +167,7 @@ def work_by_angle(v1, v2, theta):
     work = v1.magnitude()*v2.magnitude()*(cos(theta))
     return work
 
-def cross_product(v1, v2):
+def cross_product(v1: Vector, v2: Vector) -> Vector:
     """A function used to calculate the cross product of two vectors"""
     v1i, v1j, v1k = v1.component
     v2i, v2j, v2k = v2.component
@@ -170,7 +179,7 @@ def cross_product(v1, v2):
     cross_product = Vector(cp_i, cp_j, cp_k)
     return cross_product
 
-def add_vectors(v1, v2):
+def add_vectors(v1: Vector, v2: Vector) -> Vector:
     """A function used to perform vector addition"""
     v1i, v1j, v1k = v1.component
     v2i, v2j, v2k = v2.component
@@ -182,7 +191,7 @@ def add_vectors(v1, v2):
     added_vector = Vector(added_i, added_j, added_k)
     return added_vector
 
-def subtract_vectors(v1, v2):
+def subtract_vectors(v1: Vector, v2: Vector) -> Vector:
     """A function used to perform vector subtraction"""
     v1i, v1j, v1k = v1.component
     v2i, v2j, v2k = v2.component
