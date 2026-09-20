@@ -27,6 +27,19 @@ from sympy.core.function import expand
 from sympy.polys.polytools import factor
 from sympy.simplify.radsimp import radsimp
 
+"""
+A note on type hinting...
+Due to the large range of objects brought in from sympy to handle the
+symbolic algebra, a good portion of the type hinting here is super-
+ficial.  Where Any appears as a type it will be appended by a numbered
+comment indicating the true range of appropriate types.  The input type
+lists are as follows...
+1) [float, int, str, Symbol, Integer, Float, Rational, Pi, Pow, Add,
+Mul]
+This may be added to as the program develops, and different type sets 
+should be noted above.
+"""
+
 
 #global variables
 
@@ -40,9 +53,9 @@ class Vector:
     """
     def __init__(
             self,
-            i: float | int | str,
-            j: float | int | str,
-            k: float | int | str
+            i: Any #1
+            j: Any #1 
+            k: Any #1
             ) -> None:
         """The initialization of the class Vector"""
         self.i = i
@@ -50,9 +63,9 @@ class Vector:
         self.k = k
         self.component = (self.i, self.j, self.k)
 
-    def mag_square(self) -> float | int | str:
+    def mag_square(self) -> Any: #1
         """
-        A method for determining the squared magnitude of a vector
+        A method for determining the squared magnitude of a vector.
         """
         i_comp = pow(self.i, 2)
         j_comp = pow(self.j, 2)
@@ -60,7 +73,7 @@ class Vector:
         mag_square = i_comp+j_comp+k_comp
         return mag_square
 
-    def magnitude(self) -> float | int | str:
+    def magnitude(self) -> Any: #1
         """A method to determine the magnitude of a vector"""
         i_comp = pow(self.i, 2)
         j_comp = pow(self.j, 2)
@@ -83,7 +96,7 @@ class Vector:
         return unit_vector
 
 
-    def scalar(self, scalar: float | int | str) -> tuple:
+    def scalar(self, scalar: Any) -> tuple: #1
         """A method for applying scalar multiplication"""
         self.i *= scalar
         self.j *= scalar
@@ -117,12 +130,12 @@ class CrossProductDeterminant:
 
 
 #Functions
-def dot(v1: Vector, v2: Vector) -> float | int | str:
+def dot(v1: Vector, v2: Vector) -> Any: #1
     """A function used to compute dot products"""
     dot_prod =  (v1.i*v2.i) + (v1.j*v2.j) + (v1.k*v2.k)
     return dot_prod
 
-def angle_between(v1: Vector, v2: Vector) -> float | int | str:
+def angle_between(v1: Vector, v2: Vector) -> Any: #1
     """A method used to find the angle between two vectors"""
     mags_mul = v1.magnitude() * v2.magnitude()
     dot_prod = dot(v1, v2)
@@ -146,7 +159,7 @@ def proj(v1: Vector, v2: Vector) -> Vector:
     proj_v1_on_v2.scalar(scalar_comp)
     return proj_v1_on_v2
 
-def work_by_dot(v1: Vector, v2: Vector) -> float | int | str:
+def work_by_dot(v1: Vector, v2: Vector) -> Any: #1
     """
     A function used to compute work when the angle between vectors is
     not known.  Note that this function is somewhat redundant, but in
@@ -158,8 +171,8 @@ def work_by_dot(v1: Vector, v2: Vector) -> float | int | str:
 def work_by_angle(
         v1: Vector,
         v2: Vector,
-        theta: float | int | str
-        ) -> float | int |str:
+        theta: Any #1
+        ) -> Any: #1
     """
     A function used to compute the work done when the angle between two
     vectors is known
