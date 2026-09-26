@@ -17,29 +17,26 @@ class VectorScreen(App):
     """A Textual app to manage the vector calculator"""
 
     #BINDINGS = 
-    #CSS =
+    CSS_PATH = "../css/calc_style.tcss"
 
     def compose(self) -> ComposeResult:
         yield Header()
-        with Vertical():
-            with Horizontal():
-                yield Static()
-                yield Input()
-                yield Input()
-                yield Input()
-            with Horizontal():
-                yield Button()
-                yield Button()
-                yield Button()
-                yield Button()
-            yield Button()
-            with Horizontal():
-                yield Static()
-                yield Input()
-                yield Input()
-                yield Input()
-            yield Button()
-            yield Digits()
+        yield Static("v:", classes="vec_inp", id="v")
+        yield Input(placeholder="i")
+        yield Input(placeholder="j")
+        yield Input(placeholder="k")
+        yield Button("Add", classes="opr", id="add")
+        yield Button("Subtract", classes="opr", id="sub")
+        yield Button("Cross Product", classes="opr", id="cross")
+        yield Button("Dot Product", classes="opr", id="dot")
+        yield Button("Angle Between", classes="opr", id="ang_bet")
+        yield Button("Work", classes="opr", id="work")
+        yield Static("u:", classes="vec_inp", id="u")
+        yield Input(placeholder="i")
+        yield Input(placeholder="j")
+        yield Input(placeholder="k")
+        yield Button("=", classes="opr", id="equals")
+        yield Static("output", classes=output, id="output")
 
 
 

@@ -1,0 +1,13 @@
+/* Style sheet for the calculator.  All styling edits for the
+ * program should reside only in this file
+ */
+
+Screen {
+    layout: grid;
+    grid-size: 3 8;
+  }
+
+.vec_inp {
+    column-span: 3;
+    border: solid #D65D0E;
+  }
