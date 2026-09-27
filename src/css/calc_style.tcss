@@ -4,7 +4,7 @@
 
 Screen {
     layout: grid;
-    grid-size: 3 6;
+    grid-size: 4 6;
     background: #32302F;
     align: center middle;
   }
@@ -17,13 +17,23 @@ Input {
   }
 
 .cntnr {
-    column-span: 3;
+    column-span: 4;
     border: solid #D65D0E;
     height: 100%;
     width: 100%;
     background: #32302F;
     align: center middle;
     border_title-align: left;
+  }
+
+.cntnr_rad {
+  column-span: 2;
+  border: solid #D65D0E;
+  height: 100%;
+  background: #32302F;
+  align: center middle;
+  border_title-align: left;
+  border_subtitle-align: right;
   }
 
 .opr {
@@ -33,30 +43,20 @@ Input {
    width: 24;
   }
 
-#oprtns {
+#oprtns_1 {
+  row-span: 1;
+}
+
+#oprtns_2 {
   row-span: 2;
-  layout: grid;
-  grid-size: 3 2;
 }
 
-#equals {
-  column-span: 1;
-  border: solid #D79921;
-  height: 3;
-  width: 11;
-  background: #32302F;
-  content-align: center middle;
+#theta_scal {
+  row-span: 1;
+  border_subtitle-align: right;
 }
-
-#calc {
-  column-span: 3;
-  border: none;
-  background: #32302F;
-  align: center middle;
-}
-
 #output {
-    column-span: 3;
+    column-span: 4;
     border: solid #D65D0E;
     height: 100%;
     width: 100%;

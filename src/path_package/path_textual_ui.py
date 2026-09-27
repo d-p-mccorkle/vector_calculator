@@ -9,7 +9,7 @@ and the output.
 from textual.app import App, ComposeResult
 from textual.widgets import (
     Header, Digits, Input, Button, Static, RadioButton,
-    Placeholder, Label,
+    Placeholder, Label, RadioSet
 )
 
 from textual.containers import (
@@ -18,7 +18,7 @@ from textual.containers import (
 
 #body
 #def make_hrznt_cnt(text: str, id: str, border_title: str) -> Container:
-class VectorScreen(App):
+class Vector_Calculator(App):
     """A Textual app to manage the vector calculator"""
 
     #BINDINGS = 
@@ -28,24 +28,35 @@ class VectorScreen(App):
         yield Header()
         with Horizontal(classes="cntnr") as hrznt_1:
             hrznt_1.border_title = "Vector: v"
-            yield Input(placeholder="i")
-            yield Input(placeholder="j")
-            yield Input(placeholder="k")
-        with ItemGrid(classes="cntnr", id="oprtns") as oprtns:
-            oprtns.border_title = "Vector Operations"
-            yield RadioButton("Add", classes="opr", id="add")
-            yield RadioButton("Subtract", classes="opr", id="sub")
-            yield RadioButton("Cross Product", classes="opr", id="cross")
-            yield RadioButton("Dot Product", classes="opr", id="dot")
-            yield RadioButton("Angle Between", classes="opr", id="ang_bet")
-            yield RadioButton("Work", classes="opr", id="work")
+            yield Input(placeholder="i", id="v_i")
+            yield Input(placeholder="j", id="v_j")
+            yield Input(placeholder="k", id="v_k")
         with Horizontal(classes="cntnr") as hrznt_2:
             hrznt_2.border_title = "Vector: u"
-            yield Input(placeholder="i")
-            yield Input(placeholder="j")
-            yield Input(placeholder="k")
-        with Horizontal(id="calc"):
-            yield Button("Calculate", classes="equals", id="equals")
+            yield Input(placeholder="i", id="u_i")
+            yield Input(placeholder="j", id="u_j")
+            yield Input(placeholder="k", id="u_k")
+        with RadioSet(classes="cntnr_rad", id="oprtns_2") as oprtns:
+            oprtns.border_title = "Vector Operations"
+            yield RadioButton("Add", id="add")
+            yield RadioButton("Subtract", id="sub")
+            yield RadioButton("Cross Product", id="cross")
+            yield RadioButton("Dot Product", id="dot")
+            yield RadioButton("Angle Between", id="ang_bet")
+            yield RadioButton("Work", id="work")
+            yield RadioButton("Orthogonal", id="ortho")
+            yield RadioButton("Projection v->u", id="proj")
+        with RadioSet(classes="cntnr_rad", id="oprtns_1") as oprtns_1:
+            oprtns_1.border_title = "Single Vector Operations"
+            oprtns_1.border_subtitle = "Performed on v"
+            yield RadioButton("Magnitude", id="mag")
+            yield RadioButton("Magnitude Squared", id="magsqr")
+            yield RadioButton("Unit Vector", id="unit")
+        with Horizontal(classes="cntnr", id="theta_scal") as theta_scal:
+            theta_scal.border_title = "Theta"
+            theta_scal.border_subtitle = "Scalar"
+            yield Input(placeholder="Theta", id="theta")
+            yield Input(placeholder="Scalar", id="scalar")
 
         # The following variable needs to be calculated and linked to
         # the app messages to display the output.  It needs to be
