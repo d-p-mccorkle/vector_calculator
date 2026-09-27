@@ -8,11 +8,16 @@ and the output.
 #imports
 from textual.app import App, ComposeResult
 from textual.widgets import (
-        Header, Digits, Input, Button, Static,
+    Header, Digits, Input, Button, Static, RadioButton,
+    Placeholder, Label,
 )
-from textual.containers import Horizontal, Vertical
+
+from textual.containers import (
+    Horizontal, Vertical, ItemGrid,
+)
 
 #body
+#def make_hrznt_cnt(text: str, id: str, border_title: str) -> Container:
 class VectorScreen(App):
     """A Textual app to manage the vector calculator"""
 
@@ -21,23 +26,35 @@ class VectorScreen(App):
 
     def compose(self) -> ComposeResult:
         yield Header()
-        yield Static("v:", classes="vec_inp", id="v")
-        yield Input(placeholder="i")
-        yield Input(placeholder="j")
-        yield Input(placeholder="k")
-        yield Button("Add", classes="opr", id="add")
-        yield Button("Subtract", classes="opr", id="sub")
-        yield Button("Cross Product", classes="opr", id="cross")
-        yield Button("Dot Product", classes="opr", id="dot")
-        yield Button("Angle Between", classes="opr", id="ang_bet")
-        yield Button("Work", classes="opr", id="work")
-        yield Static("u:", classes="vec_inp", id="u")
-        yield Input(placeholder="i")
-        yield Input(placeholder="j")
-        yield Input(placeholder="k")
-        yield Button("=", classes="opr", id="equals")
-        yield Static("output", classes=output, id="output")
+        with Horizontal(classes="cntnr") as hrznt_1:
+            hrznt_1.border_title = "Vector: v"
+            yield Input(placeholder="i")
+            yield Input(placeholder="j")
+            yield Input(placeholder="k")
+        with ItemGrid(classes="cntnr", id="oprtns") as oprtns:
+            oprtns.border_title = "Vector Operations"
+            yield RadioButton("Add", classes="opr", id="add")
+            yield RadioButton("Subtract", classes="opr", id="sub")
+            yield RadioButton("Cross Product", classes="opr", id="cross")
+            yield RadioButton("Dot Product", classes="opr", id="dot")
+            yield RadioButton("Angle Between", classes="opr", id="ang_bet")
+            yield RadioButton("Work", classes="opr", id="work")
+        with Horizontal(classes="cntnr") as hrznt_2:
+            hrznt_2.border_title = "Vector: u"
+            yield Input(placeholder="i")
+            yield Input(placeholder="j")
+            yield Input(placeholder="k")
+        with Horizontal(id="calc"):
+            yield Button("Calculate", classes="equals", id="equals")
 
+        # The following variable needs to be calculated and linked to
+        # the app messages to display the output.  It needs to be
+        # declared here.
+        calc_output = "Vector:"
+
+        lbl = Label(calc_output, classes="output", id="output")
+        lbl.border_title = "Result"
+        yield lbl
 
 
 """
