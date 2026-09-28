@@ -1,0 +1,66 @@
+/* Style sheet for the calculator.  All styling edits for the
+ * program should reside only in this file
+ */
+
+Screen {
+    layout: grid;
+    grid-size: 4 6;
+    background: #32302F;
+    align: center middle;
+  }
+
+Input {
+  border: solid #98971A;
+  height: auto;
+  width: auto;
+  background: #32302F;
+  }
+
+.cntnr {
+    column-span: 4;
+    border: solid #D65D0E;
+    height: 100%;
+    width: 100%;
+    background: #32302F;
+    align: center middle;
+    border_title-align: left;
+  }
+
+.cntnr_rad {
+  column-span: 2;
+  border: solid #D65D0E;
+  height: 100%;
+  background: #32302F;
+  align: center middle;
+  border_title-align: left;
+  border_subtitle-align: right;
+  }
+
+.opr {
+   border: solid #98971A;
+   background: #32302F;
+   content-align: center middle;
+   width: 24;
+  }
+
+#oprtns_1 {
+  row-span: 1;
+}
+
+#oprtns_2 {
+  row-span: 2;
+}
+
+#theta_scal {
+  row-span: 1;
+  border_subtitle-align: right;
+}
+#output {
+    column-span: 4;
+    border: solid #D65D0E;
+    height: 100%;
+    width: 100%;
+    background: #32302F;
+    content-align: center middle;
+    border_title-align: left;
+}
