@@ -9,7 +9,7 @@ and the output.
 from textual.app import App, ComposeResult
 from textual.widgets import (
     Header, Digits, Input, Button, Static, RadioButton,
-    Placeholder, Label, RadioSet
+    Placeholder, Label, RadioSet, Switch,
 )
 
 from textual.containers import (
@@ -52,10 +52,11 @@ class Vector_Calculator(App):
             yield RadioButton("Magnitude", id="mag")
             yield RadioButton("Magnitude Squared", id="magsqr")
             yield RadioButton("Unit Vector", id="unit")
+            yield RadioButton("Scalar Multiplication", id="sclr")
         with Horizontal(classes="cntnr", id="theta_scal") as theta_scal:
             theta_scal.border_title = "Theta"
             theta_scal.border_subtitle = "Scalar"
-            yield Input(placeholder="Theta", id="theta")
+            yield Input(placeholder="Theta (rad)", id="theta")
             yield Input(placeholder="Scalar", id="scalar")
 
         # The following variable needs to be calculated and linked to
@@ -77,5 +78,5 @@ output
 """
 
 if __name__ == "__main__":
-    app = VectorScreen()
+    app = Vector_Calculator()
     app.run()
