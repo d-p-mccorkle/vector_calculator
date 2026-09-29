@@ -54,11 +54,13 @@ class Vector:
     """
     def __init__(
             self,
+            name: str,
             i: Any, #1
             j: Any, #1 
             k: Any, #1
             ) -> None:
         """The initialization of the class Vector"""
+        self.name = name
         self.i = i
         self.j = j
         self.k = k
@@ -106,7 +108,7 @@ class Vector:
 
     def __str__(self) -> str:
         """"A method for string formation"""
-        return f"<{self.i}i, {self.j}j, {self.k}k>"
+        return f"{self.name} = <{self.i}i, {self.j}j, {self.k}k>"
 
 """
 As of 08/09/2026 this is class is not used, but may be implemented

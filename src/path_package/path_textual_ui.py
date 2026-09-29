@@ -16,6 +16,9 @@ from textual.containers import (
     Horizontal, Vertical, ItemGrid,
 )
 
+#remember to prepend a from . when you get ready to wrap this up
+import vector_math as vm
+
 #body
 #def make_hrznt_cnt(text: str, id: str, border_title: str) -> Container:
 class Vector_Calculator(App):
@@ -62,7 +65,7 @@ class Vector_Calculator(App):
         # The following variable needs to be calculated and linked to
         # the app messages to display the output.  It needs to be
         # declared here.
-        calc_output = "Vector:"
+        calc_output = "Vector"
 
         lbl = Label(calc_output, classes="output", id="output")
         lbl.border_title = "Result"
