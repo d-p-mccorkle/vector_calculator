@@ -43,6 +43,13 @@ Input {
    width: 24;
   }
 
+.store {
+    border: solid #458588;
+    background: #32302F;
+    content-align: center middle;
+    height: auto;
+    width: auto;
+  }
 #oprtns_1 {
   row-span: 1;
 }

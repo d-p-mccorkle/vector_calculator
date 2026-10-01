@@ -7,21 +7,91 @@ and the output.
 
 #imports
 from textual.app import App, ComposeResult
+from textual.reactive import reactive
 from textual.widgets import (
     Header, Digits, Input, Button, Static, RadioButton,
-    Placeholder, Label, RadioSet, Switch,
+    Placeholder, Label, RadioSet, Switch, Widget,
 )
 
 from textual.containers import (
     Horizontal, Vertical, ItemGrid,
 )
-
+from sympy.printing import pretty
 #remember to prepend a from . when you get ready to wrap this up
 import vector_math as vm
 
 #body
 #def make_hrznt_cnt(text: str, id: str, border_title: str) -> Container:
+class Output(Widget):
+    """
+    Takes the given inputs, calculates the output and displays it.
+    """
+    vec_v = reactive(None)
+    vec_u = reactive(None)
+    theta = reactive(None)
+    scalar = reactive(None)
+    operation = reactive(None)
+    #vec_out = reactive(None)
+
+    def calc(self):
+        """
+        A method to operate on the given inputs based on the selected
+        operation.
+        """
+        ops_dict = {
+            "magsqr" : self.vec_v.vm.mag_square
+            "mag" : self.vec_v.vm.magnitude
+            "unit" : self.vec_v.vm.unit_vector
+            "sclr" : self.vec_v.vm.scalar(
+                self.scalar
+            )
+            "add" : vm.add_vectors(
+                self.vec_v, self.vec_u
+            )
+            "sub" : vm.subtract_vectors(
+                self.vec_v, self.vec_u
+            )
+            "cross" : vm.cross_product(
+                self.vec_v, self.vec_u
+            )
+            "dot" : vm.dot(
+                self.vec_v, self.vec_u
+            )
+            "ang_bet" : vm.angle_between(
+                self.vec_v, self.vec_u
+            )
+            "work" : vm.work_by_angle(
+                self.vec_v, self.vec_u, self.theta
+            )
+            "ortho" : vm.ortho_check(
+                self.vec_v, self.vec_u
+            )
+            "proj" : vm.proj(
+                self.vec_v, self.vec_u
+            )
+        }
+
+        """ops_list = [
+            magsqr, mag, unit, sclr, add, sub, cross, dot, ang_bet,
+            work, ortho, proj
+        ]
+        """
+        for k, v in ops_dict:
+            if self.operation == k:
+                out = v
+        return out
+
+    def disp_out(self):
+        vec_out = self.calc()
+        pretty_out = pretty(vec_out)
+        return pretty_out
+
+    def render(self):
+        return f"{pretty_out}"
+
+
 class Vector_Calculator(App):
+
     """A Textual app to manage the vector calculator"""
 
     #BINDINGS = 
@@ -34,11 +104,13 @@ class Vector_Calculator(App):
             yield Input(placeholder="i", id="v_i")
             yield Input(placeholder="j", id="v_j")
             yield Input(placeholder="k", id="v_k")
+            yield Button("Store->v", classes="store", id="sto_v")
         with Horizontal(classes="cntnr") as hrznt_2:
             hrznt_2.border_title = "Vector: u"
             yield Input(placeholder="i", id="u_i")
             yield Input(placeholder="j", id="u_j")
             yield Input(placeholder="k", id="u_k")
+            yield Button("Store->u", classes="store", id="sto_u")
         with RadioSet(classes="cntnr_rad", id="oprtns_2") as oprtns:
             oprtns.border_title = "Vector Operations"
             yield RadioButton("Add", id="add")
@@ -62,15 +134,7 @@ class Vector_Calculator(App):
             yield Input(placeholder="Theta (rad)", id="theta")
             yield Input(placeholder="Scalar", id="scalar")
 
-        # The following variable needs to be calculated and linked to
-        # the app messages to display the output.  It needs to be
-        # declared here.
-        calc_output = "Vector"
-
-        lbl = Label(calc_output, classes="output", id="output")
-        lbl.border_title = "Result"
-        yield lbl
-
+        
 
 """
 v - i j k
