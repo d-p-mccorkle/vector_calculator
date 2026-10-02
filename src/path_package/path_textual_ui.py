@@ -6,13 +6,14 @@ and the output.
 """
 
 #imports
+from textual import on
 from textual.app import App, ComposeResult
 from textual.reactive import reactive
 from textual.widgets import (
     Header, Digits, Input, Button, Static, RadioButton,
-    Placeholder, Label, RadioSet, Switch, Widget,
+    Placeholder, Label, RadioSet, Switch,
 )
-
+from textual.widget import Widget
 from textual.containers import (
     Horizontal, Vertical, ItemGrid,
 )
@@ -22,10 +23,8 @@ import vector_math as vm
 
 #body
 #def make_hrznt_cnt(text: str, id: str, border_title: str) -> Container:
-class Output(Widget):
-    """
+"""class Output(Widget):
     Takes the given inputs, calculates the output and displays it.
-    """
     vec_v = reactive(None)
     vec_u = reactive(None)
     theta = reactive(None)
@@ -34,10 +33,8 @@ class Output(Widget):
     #vec_out = reactive(None)
 
     def calc(self):
-        """
         A method to operate on the given inputs based on the selected
         operation.
-        """
         ops_dict = {
             "magsqr" : self.vec_v.vm.mag_square
             "mag" : self.vec_v.vm.magnitude
@@ -71,11 +68,10 @@ class Output(Widget):
             )
         }
 
-        """ops_list = [
+        ops_list = [
             magsqr, mag, unit, sclr, add, sub, cross, dot, ang_bet,
             work, ortho, proj
         ]
-        """
         for k, v in ops_dict:
             if self.operation == k:
                 out = v
@@ -88,7 +84,7 @@ class Output(Widget):
 
     def render(self):
         return f"{pretty_out}"
-
+"""
 
 class Vector_Calculator(App):
 
@@ -99,18 +95,21 @@ class Vector_Calculator(App):
 
     def compose(self) -> ComposeResult:
         yield Header()
+
         with Horizontal(classes="cntnr") as hrznt_1:
             hrznt_1.border_title = "Vector: v"
             yield Input(placeholder="i", id="v_i")
             yield Input(placeholder="j", id="v_j")
             yield Input(placeholder="k", id="v_k")
             yield Button("Store->v", classes="store", id="sto_v")
+
         with Horizontal(classes="cntnr") as hrznt_2:
             hrznt_2.border_title = "Vector: u"
             yield Input(placeholder="i", id="u_i")
             yield Input(placeholder="j", id="u_j")
             yield Input(placeholder="k", id="u_k")
             yield Button("Store->u", classes="store", id="sto_u")
+
         with RadioSet(classes="cntnr_rad", id="oprtns_2") as oprtns:
             oprtns.border_title = "Vector Operations"
             yield RadioButton("Add", id="add")
@@ -121,6 +120,7 @@ class Vector_Calculator(App):
             yield RadioButton("Work", id="work")
             yield RadioButton("Orthogonal", id="ortho")
             yield RadioButton("Projection v->u", id="proj")
+
         with RadioSet(classes="cntnr_rad", id="oprtns_1") as oprtns_1:
             oprtns_1.border_title = "Single Vector Operations"
             oprtns_1.border_subtitle = "Performed on v"
@@ -128,13 +128,35 @@ class Vector_Calculator(App):
             yield RadioButton("Magnitude Squared", id="magsqr")
             yield RadioButton("Unit Vector", id="unit")
             yield RadioButton("Scalar Multiplication", id="sclr")
+
         with Horizontal(classes="cntnr", id="theta_scal") as theta_scal:
             theta_scal.border_title = "Theta"
             theta_scal.border_subtitle = "Scalar"
             yield Input(placeholder="Theta (rad)", id="theta")
             yield Input(placeholder="Scalar", id="scalar")
 
-        
+        with Horizontal(classes="cntnr", id="test") as test:
+            test.border_title = "TEST"
+            test.border_subtitle = "TEST"
+            yield Static(id="test_wid")
+
+    @on(Button.Pressed, "#sto_v")
+    def store_v(self):
+            v_i = self.query_one("#v_i", Input)
+            v_j = self.query_one("#v_j", Input)
+            v_k = self.query_one("#v_k", Input)
+            v_i_int = int(v_i.value)
+            v_j_int = int(v_j.value)
+            v_k_int = int(v_k.value)
+            self.stored_v = vm.Vector(
+            "test_vec",
+            v_i_int,
+            v_j_int,
+            v_k_int
+            )
+            display = self.query_one("#test_wid", Static)
+            display.update(f"{self.stored_v}")
+
 
 """
 v - i j k
