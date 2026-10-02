@@ -71,3 +71,11 @@ Input {
     content-align: center middle;
     border_title-align: left;
 }
+
+#test_wid {
+  border: solid #D65D0E;
+  height: 75%;
+  width: 75%;
+  background: #32302F;
+  content-align: center middle;
+}
