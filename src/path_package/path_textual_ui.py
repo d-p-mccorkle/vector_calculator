@@ -142,20 +142,87 @@ class Vector_Calculator(App):
 
     @on(Button.Pressed, "#sto_v")
     def store_v(self):
-            v_i = self.query_one("#v_i", Input)
-            v_j = self.query_one("#v_j", Input)
-            v_k = self.query_one("#v_k", Input)
-            v_i_int = int(v_i.value)
-            v_j_int = int(v_j.value)
-            v_k_int = int(v_k.value)
-            self.stored_v = vm.Vector(
-            "test_vec",
-            v_i_int,
-            v_j_int,
-            v_k_int
-            )
-            display = self.query_one("#test_wid", Static)
-            display.update(f"{self.stored_v}")
+        """A method to store the v inputs and generate a v vector."""
+        v_i_raw = self.query_one("#v_i", Input)
+        v_j_raw = self.query_one("#v_j", Input)
+        v_k_raw = self.query_one("#v_k", Input)
+        v_i = int(v_i_raw.value)
+        v_j = int(v_j_raw.value)
+        v_k = int(v_k_raw.value)
+        self.vector_v = vm.Vector(
+            "v",
+            v_i,
+            v_j,
+            v_k
+        )
+        display = self.query_one("#test_wid", Static)
+        display.update(f"{self.vector_v}")
+
+    @on(Button.Pressed, "#sto_u")
+    def store_u(self):
+        """A method to store the u inputs and generate a u vector."""
+        u_i_raw = self.query_one("#u_i", Input)
+        u_j_raw = self.query_one("#u_j", Input)
+        u_k_raw = self.query_one("#u_k", Input)
+        u_i = int(u_i_raw.value)
+        u_j = int(u_j_raw.value)
+        u_k = int(u_k_raw.value)
+        self.vector_u = vm.Vector(
+            "u",
+            u_i,
+            u_j,
+            u_k
+        )
+        display = self.query_one("#test_wid", Static)
+        display.update(f"{self.stored_u}")
+
+    @on(RadioButton.Changed, "#add")
+    def op_add(self):
+        """A method to handle changes to the #add operation."""
+        pass
+
+    @on(RadioButton.Changed, "#sub")
+    def op_sub(self):
+        """A method to handle changes to the #sub operation."""
+        pass
+
+    @on(RadioButton.Changed, "#cross")
+    def op_cross(self):
+        """A method to handle changes to the #cross operation."""
+        pass
+
+    @on(RadioButton.Changed, "#dot")
+    def op_dot(self):
+        """A method to handle changes to the #dot operation."""
+        pass
+ 
+    @on(RadioButton.Changed, "#ang_bet")
+    def op_ang_bet(self):
+        """A method to handle changes to the #ang_bet operation."""
+        pass
+
+    @on(RadioButton.Changed, "#work")
+    def op_work(self):
+        """A method to handle changes to the #work operation."""
+        pass
+
+    @on(RadioButton.Changed, "#ortho")
+    def op_ortho(self):
+        """A method to handle changes to the #ortho operation."""
+        pass
+
+    @on(RadioButton.Changed, "#proj")
+    def op_proj(self):
+        """A method to handle changes to the #proj operation."""
+         pass
+
+
+
+
+
+
+
+
 
 
 """
