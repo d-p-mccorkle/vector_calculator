@@ -110,24 +110,48 @@ class Vector_Calculator(App):
             yield Input(placeholder="k", id="u_k")
             yield Button("Store->u", classes="store", id="sto_u")
 
-        with RadioSet(classes="cntnr_rad", id="oprtns_2") as oprtns:
+        with ItemGrid(classes="cntnr_rad", id="oprtns_2") as oprtns:
             oprtns.border_title = "Vector Operations"
-            yield RadioButton("Add", id="add")
-            yield RadioButton("Subtract", id="sub")
-            yield RadioButton("Cross Product", id="cross")
-            yield RadioButton("Dot Product", id="dot")
-            yield RadioButton("Angle Between", id="ang_bet")
-            yield RadioButton("Work", id="work")
-            yield RadioButton("Orthogonal", id="ortho")
-            yield RadioButton("Projection v->u", id="proj")
+            yield Button(
+                "Add", classes="op2_but", id="add"
+            )
+            yield Button(
+                "Subtract", classes="op2_but", id="sub"
+            )
+            yield Button(
+                "Cross Product", classes="op2_but", id="cross"
+            )
+            yield Button(
+                "Dot Product", classes="op2_but", id="dot"
+            )
+            yield Button(
+                "Angle Between", classes="op2_but", id="ang_bet"
+            )
+            yield Button(
+                "Work", classes="op2_but", id="work"
+            )
+            yield Button(
+                "Orthogonal", classes="op2_but", id="ortho"
+            )
+            yield Button(
+                "Projection v->u", classes="op2_but", id="proj"
+            )
 
-        with RadioSet(classes="cntnr_rad", id="oprtns_1") as oprtns_1:
+        with ItemGrid(classes="cntnr_rad", id="oprtns_1") as oprtns_1:
             oprtns_1.border_title = "Single Vector Operations"
             oprtns_1.border_subtitle = "Performed on v"
-            yield RadioButton("Magnitude", id="mag")
-            yield RadioButton("Magnitude Squared", id="magsqr")
-            yield RadioButton("Unit Vector", id="unit")
-            yield RadioButton("Scalar Multiplication", id="sclr")
+            yield Button(
+                "Magnitude", classes="op1_but", id="mag"
+            )
+            yield Button(
+                "Magnitude Squared", classes="op1_but", id="magsqr"
+            )
+            yield Button(
+                "Unit Vector", classes="op1_but", id="unit"
+            )
+            yield Button(
+                "Scalar Multiplication", classes="op1_but", id="sclr"
+            )
 
         with Horizontal(classes="cntnr", id="theta_scal") as theta_scal:
             theta_scal.border_title = "Theta"
@@ -139,6 +163,7 @@ class Vector_Calculator(App):
             test.border_title = "TEST"
             test.border_subtitle = "TEST"
             yield Static(id="test_wid")
+
 
     @on(Button.Pressed, "#sto_v")
     def store_v(self):
@@ -155,8 +180,8 @@ class Vector_Calculator(App):
             v_j,
             v_k
         )
-        display = self.query_one("#test_wid", Static)
-        display.update(f"{self.vector_v}")
+        #display = self.query_one("#test_wid", Static)
+        #display.update(f"{self.vector_v}")
 
     @on(Button.Pressed, "#sto_u")
     def store_u(self):
@@ -173,51 +198,65 @@ class Vector_Calculator(App):
             u_j,
             u_k
         )
+        #display = self.query_one("#test_wid", Static)
+        #display.update(f"{self.stored_u}")
+
+
+    @on(Button.Pressed, "#add")
+    def add(self):
+        self.added_vecs = vm.add_vectors(self.vector_v, self.vector_u)
         display = self.query_one("#test_wid", Static)
-        display.update(f"{self.stored_u}")
+        display.update(f"{self.added_vecs}")
 
-    @on(RadioButton.Changed, "#add")
-    def op_add(self):
-        """A method to handle changes to the #add operation."""
+    @on(Button.Pressed, "#sub")
+    def sub(self):
+        self.subbed_vecs = vm.subtract_vectors(
+            self.vector_v, self.vector_u
+        )
+        display = self.query_one("#test_wid", Static)
+        display.update(f"{self.subbed_vecs}")
+
+    @on(Button.Pressed, "#cross")
+    def cross(self):
+        self.cross_prod = vm.cross_product(
+            self.vector_v, self.vector_u
+        )
+        display = self.query_one("#test_wid", Static)
+        display.update(f"{self.cross_prod}")
+
+    @on(Button.Pressed, "#dot")
+    def dot(self):
+        self.dot_prod = vm.dot(self.vector_v, self.vector_u)
+        dot_disp = "v"+"\u22C5"+"u ="+" "+f"{self.dot_prod}"
+        display = self.query_one("#test_wid", Static)
+        display.update(f"{dot_disp}")
+
+    @on(Button.Pressed, "#ang_bet")
+    def ang_bet(self):
+        self.ang_bet = vm.angle_between(
+            self.vector_v, self.vector_u
+        )
+        display = self.query_one("#test_wid", Static)
+        display.update(f"{self.ang_bet}")
+
+    @on(Button.Pressed, "#work")
+    def work(self):
         pass
 
-    @on(RadioButton.Changed, "#sub")
-    def op_sub(self):
-        """A method to handle changes to the #sub operation."""
-        pass
+    @on(Button.Pressed, "#ortho")
+    def ortho(self):
+        self.ortho = vm.ortho_check(self.vector_v, self.vector_u)
+        ortho_true = "The vectors v and u are orthoganal."
+        ortho_false = "The vectors v and u are not orthoganal."
+        ortho_out = ortho_true if self.ortho else ortho_false
+        display = self.query_one("#test_wid", Static)
+        display.update(f"{ortho_out}")
 
-    @on(RadioButton.Changed, "#cross")
-    def op_cross(self):
-        """A method to handle changes to the #cross operation."""
-        pass
-
-    @on(RadioButton.Changed, "#dot")
-    def op_dot(self):
-        """A method to handle changes to the #dot operation."""
-        pass
- 
-    @on(RadioButton.Changed, "#ang_bet")
-    def op_ang_bet(self):
-        """A method to handle changes to the #ang_bet operation."""
-        pass
-
-    @on(RadioButton.Changed, "#work")
-    def op_work(self):
-        """A method to handle changes to the #work operation."""
-        pass
-
-    @on(RadioButton.Changed, "#ortho")
-    def op_ortho(self):
-        """A method to handle changes to the #ortho operation."""
-        pass
-
-    @on(RadioButton.Changed, "#proj")
-    def op_proj(self):
-        """A method to handle changes to the #proj operation."""
-         pass
-
-
-
+    @on(Button.Pressed, "#proj")
+    def proj(self):
+        self.proj = vm.proj(self.vector_v, self.vector_u)
+        display = self.query_one("#test_wid", Static)
+        display.update(f"{self.proj}")
 
 
 
