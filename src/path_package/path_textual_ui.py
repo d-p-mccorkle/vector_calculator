@@ -258,19 +258,31 @@ class Vector_Calculator(App):
         display = self.query_one("#test_wid", Static)
         display.update(f"{self.proj}")
 
+    @on(Button.Pressed, "#mag")
+    def mag(self):
+        self.mag = self.vector_v.magnitude()
+        display = self.query_one("#test_wid", Static)
+        display.update(f"{self.mag}")
 
+    @on(Button.Pressed, "#magsqr")
+    def magsqr(self):
+        self.magsqr = self.vector_v.mag_square()
+        display = self.query_one("#test_wid", Static)
+        display.update(f"{self.magsqr}")
 
+    @on(Button.Pressed, "#unit")
+    def unit(self):
+        self.unit = self.vector_v.unit_vector()
+        display = self.query_one("#test_wid", Static)
+        display.update(f"{self.unit}")
 
-
-
-
-"""
-v - i j k
-operations: add sub cross dot angle
-u - i j k
-equals
-output
-"""
+    @on(Button.Pressed, "#sclr")
+    def sclr(self):
+        scalar_raw = self.query_one("#scalar", Input)
+        scalar = int(scalar_raw.value)
+        self.vector_v.scalar(scalar)
+        display = self.query_one("#test_wid", Static)
+        display.update(f"{self.vector_v}")
 
 if __name__ == "__main__":
     app = Vector_Calculator()
