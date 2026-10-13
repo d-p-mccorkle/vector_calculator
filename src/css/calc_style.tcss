@@ -26,7 +26,7 @@ Input {
     border_title-align: left;
   }
 
-.cntnr_rad {
+.cntnr_op {
   column-span: 2;
   border: solid #D65D0E;
   height: 100%;
