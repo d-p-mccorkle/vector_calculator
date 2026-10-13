@@ -241,7 +241,12 @@ class Vector_Calculator(App):
 
     @on(Button.Pressed, "#work")
     def work(self):
-        pass
+        theta = float(self.query_one("#theta", Input).value)
+        self.work = vm.work_by_dot(
+            self.vector_v, self.vector_u, theta
+        )
+        display = self.query_one("#test_wid", Static)
+        display.update(f"{self.work}")
 
     @on(Button.Pressed, "#ortho")
     def ortho(self):
