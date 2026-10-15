@@ -21,71 +21,6 @@ from sympy.printing import pretty
 #remember to prepend a from . when you get ready to wrap this up
 import vector_math as vm
 
-#body
-#def make_hrznt_cnt(text: str, id: str, border_title: str) -> Container:
-"""class Output(Widget):
-    Takes the given inputs, calculates the output and displays it.
-    vec_v = reactive(None)
-    vec_u = reactive(None)
-    theta = reactive(None)
-    scalar = reactive(None)
-    operation = reactive(None)
-    #vec_out = reactive(None)
-
-    def calc(self):
-        A method to operate on the given inputs based on the selected
-        operation.
-        ops_dict = {
-            "magsqr" : self.vec_v.vm.mag_square
-            "mag" : self.vec_v.vm.magnitude
-            "unit" : self.vec_v.vm.unit_vector
-            "sclr" : self.vec_v.vm.scalar(
-                self.scalar
-            )
-            "add" : vm.add_vectors(
-                self.vec_v, self.vec_u
-            )
-            "sub" : vm.subtract_vectors(
-                self.vec_v, self.vec_u
-            )
-            "cross" : vm.cross_product(
-                self.vec_v, self.vec_u
-            )
-            "dot" : vm.dot(
-                self.vec_v, self.vec_u
-            )
-            "ang_bet" : vm.angle_between(
-                self.vec_v, self.vec_u
-            )
-            "work" : vm.work_by_angle(
-                self.vec_v, self.vec_u, self.theta
-            )
-            "ortho" : vm.ortho_check(
-                self.vec_v, self.vec_u
-            )
-            "proj" : vm.proj(
-                self.vec_v, self.vec_u
-            )
-        }
-
-        ops_list = [
-            magsqr, mag, unit, sclr, add, sub, cross, dot, ang_bet,
-            work, ortho, proj
-        ]
-        for k, v in ops_dict:
-            if self.operation == k:
-                out = v
-        return out
-
-    def disp_out(self):
-        vec_out = self.calc()
-        pretty_out = pretty(vec_out)
-        return pretty_out
-
-    def render(self):
-        return f"{pretty_out}"
-"""
-
 class Vector_Calculator(App):
 
     """A Textual app to manage the vector calculator"""
@@ -128,9 +63,6 @@ class Vector_Calculator(App):
                 "Angle Between", classes="op2_but", id="ang_bet"
             )
             yield Button(
-                "Work", classes="op2_but", id="work"
-            )
-            yield Button(
                 "Orthogonal", classes="op2_but", id="ortho"
             )
             yield Button(
@@ -150,28 +82,24 @@ class Vector_Calculator(App):
                 "Unit Vector", classes="op1_but", id="unit"
             )
             yield Button(
-                "Scalar Multiplication", classes="op1_but", id="sclr"
+                "Scalar", classes="op1_but", id="sclr"
             )
 
         with Horizontal(classes="cntnr", id="theta_scal") as theta_scl:
-            theta_scl.border_title = "Theta"
-            theta_scl.border_subtitle = "Scalar"
-            yield Input(placeholder="Theta (rad)", id="theta")
+            theta_scl.border_title = "Scalar"
             yield Input(placeholder="Scalar", id="scalar")
 
-        with Horizontal(classes="cntnr", id="test") as test:
-            test.border_title = "TEST"
-            test.border_subtitle = "TEST"
-            yield Static(id="test_wid")
-
-    display = self.query_one("#test_wid", Static)
+        with Horizontal(classes="cntnr", id="output_cont") as test:
+            test.border_title = "Output"
+            test.border_subtitle = "Output"
+            yield Static(id="output")
 
     @on(Button.Pressed, "#store_v")
     def store_v(self):
         """A method to store the v inputs and generate a v vector."""
-        v_i = float(self.query_one("#v_i", Input).value)
-        v_j = float(self.query_one("#v_j", Input).value)
-        v_k = float(self.query_one("#v_k", Input).value)
+        v_i = int(self.query_one("#v_i", Input).value)
+        v_j = int(self.query_one("#v_j", Input).value)
+        v_k = int(self.query_one("#v_k", Input).value)
         self.vector_v = vm.Vector(
             "v",
             v_i,
@@ -182,9 +110,9 @@ class Vector_Calculator(App):
     @on(Button.Pressed, "#store_u")
     def store_u(self):
         """A method to store the u inputs and generate a u vector."""
-        u_i = float(self.query_one("#u_i", Input).value)
-        u_j = float(self.query_one("#u_j", Input).value)
-        u_k = float(self.query_one("#u_k", Input).value)
+        u_i = int(self.query_one("#u_i", Input).value)
+        u_j = int(self.query_one("#u_j", Input).value)
+        u_k = int(self.query_one("#u_k", Input).value)
         self.vector_u = vm.Vector(
             "u",
             u_i,
@@ -195,6 +123,7 @@ class Vector_Calculator(App):
     @on(Button.Pressed, "#add")
     def add(self):
         self.added_vecs = vm.add_vectors(self.vector_v, self.vector_u)
+        display = self.query_one("#output", Static)
         display.update(f"{self.added_vecs}")
 
     @on(Button.Pressed, "#sub")
@@ -202,6 +131,7 @@ class Vector_Calculator(App):
         self.subbed_vecs = vm.subtract_vectors(
             self.vector_v, self.vector_u
         )
+        display = self.query_one("#output", Static)
         display.update(f"{self.subbed_vecs}")
 
     @on(Button.Pressed, "#cross")
@@ -209,12 +139,14 @@ class Vector_Calculator(App):
         self.cross_prod = vm.cross_product(
             self.vector_v, self.vector_u
         )
+        display = self.query_one("#output", Static)
         display.update(f"{self.cross_prod}")
 
     @on(Button.Pressed, "#dot")
     def dot(self):
         self.dot_prod = vm.dot(self.vector_v, self.vector_u)
         dot_disp = "v"+"\u22C5"+"u ="+" "+f"{self.dot_prod}"
+        display = self.query_one("#output", Static)
         display.update(f"{dot_disp}")
 
     @on(Button.Pressed, "#ang_bet")
@@ -222,15 +154,8 @@ class Vector_Calculator(App):
         self.ang_bet = vm.angle_between(
             self.vector_v, self.vector_u
         )
-        display.update(f"{self.ang_bet}")
-
-    @on(Button.Pressed, "#work")
-    def work(self):
-        theta = float(self.query_one("#theta", Input).value)
-        self.work = vm.work_by_dot(
-            self.vector_v, self.vector_u, theta
-        )
-        display.update(f"{self.work}")
+        display = self.query_one("#output", Static)
+        display.update(f"\u03B8 = {self.ang_bet}")
 
     @on(Button.Pressed, "#ortho")
     def ortho(self):
@@ -238,33 +163,46 @@ class Vector_Calculator(App):
         ortho_true = "The vectors v and u are orthoganal."
         ortho_false = "The vectors v and u are not orthoganal."
         ortho_out = ortho_true if self.ortho else ortho_false
+        display = self.query_one("#output", Static)
         display.update(f"{ortho_out}")
 
     @on(Button.Pressed, "#proj")
     def proj(self):
         self.proj = vm.proj(self.vector_v, self.vector_u)
+        display = self.query_one("#output", Static)
         display.update(f"{self.proj}")
 
     @on(Button.Pressed, "#mag")
     def mag(self):
         self.mag = self.vector_v.magnitude()
-        display.update(f"{self.mag}")
+        display = self.query_one("#output", Static)
+        display.update(f"|v| = {self.mag}")
 
     @on(Button.Pressed, "#magsqr")
     def magsqr(self):
         self.magsqr = self.vector_v.mag_square()
-        display.update(f"{self.magsqr}")
+        display = self.query_one("#output", Static)
+        display.update(f"|v|\u00B2 = {self.magsqr}")
 
     @on(Button.Pressed, "#unit")
     def unit(self):
-        self.unit = self.vector_v.unit_vector()
+        unit_tuple = self.vector_v.unit_vector()
+        i, j, k = unit_tuple
+        self.unit = vm.Vector(
+            "v\u0302",
+            i,
+            j,
+            k
+        )
+        display = self.query_one("#output", Static)
         display.update(f"{self.unit}")
 
     @on(Button.Pressed, "#sclr")
     def sclr(self):
-        scalar_mult = float(self.query_one("#scalar", Input).value)
+        scalar_mult = int(self.query_one("#scalar", Input).value)
         self.vector_v.scalar(scalar_mult)
-        display.update(f"{self.vector_v}")
+        display = self.query_one("#output", Static)
+        display.update(f"{scalar_mult}{self.vector_v}")
 
 if __name__ == "__main__":
     app = Vector_Calculator()
