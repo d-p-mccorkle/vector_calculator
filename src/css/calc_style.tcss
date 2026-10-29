@@ -26,7 +26,7 @@ Input {
     border_title-align: left;
   }
 
-.cntnr_rad {
+.cntnr_ops {
   column-span: 2;
   border: solid #D65D0E;
   height: 100%;
@@ -43,18 +43,47 @@ Input {
    width: 24;
   }
 
+.store {
+    border: solid #458588;
+    background: #32302F;
+    content-align: center middle;
+    height: auto;
+    width: auto;
+  }
+
+.op2_but {
+  border: solid #FABD2F;
+  background: #32302F;
+  content-align: center middle;
+  height: auto;
+  width: 50%;
+  }
+
+.op1_but {
+    border: solid #8EC07C;
+    background: #32302F;
+    content-align: center middle;
+    height: auto;
+    width: 50%;
+  }
+
 #oprtns_1 {
-  row-span: 1;
+  row-span: 2;
+  layout: grid;
+  grid-size: 2 2;
 }
 
 #oprtns_2 {
-  row-span: 2;
+  row-span: 3;
+  layout: grid;
+  grid-size: 2 4;
 }
 
 #theta_scal {
   row-span: 1;
   border_subtitle-align: right;
 }
+
 #output {
     column-span: 4;
     border: solid #D65D0E;
@@ -63,4 +92,13 @@ Input {
     background: #32302F;
     content-align: center middle;
     border_title-align: left;
+    border_subtitle-align: right;
+}
+
+#test_wid {
+  border: solid #D65D0E;
+  height: 75%;
+  width: 75%;
+  background: #32302F;
+  content-align: center middle;
 }

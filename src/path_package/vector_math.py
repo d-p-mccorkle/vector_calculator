@@ -54,11 +54,13 @@ class Vector:
     """
     def __init__(
             self,
+            name: str,
             i: Any, #1
             j: Any, #1 
             k: Any, #1
             ) -> None:
         """The initialization of the class Vector"""
+        self.name = name
         self.i = i
         self.j = j
         self.k = k
@@ -106,7 +108,7 @@ class Vector:
 
     def __str__(self) -> str:
         """"A method for string formation"""
-        return f"<{self.i}i, {self.j}j, {self.k}k>"
+        return f"{self.name} = < {self.i}i, {self.j}j, {self.k}k >"
 
 """
 As of 08/09/2026 this is class is not used, but may be implemented
@@ -156,7 +158,8 @@ def proj(v1: Vector, v2: Vector) -> Vector:
     v2_mag_sq = v2.mag_square()
     scalar_comp = Rational(dot_prod, v2_mag_sq)
     i, j, k = v2.component
-    proj_v1_on_v2 = Vector(i, j, k)
+    proj_v1_on_v2 = Vector(
+        f"{v1.name}->{v2.name}", i, j, k)
     proj_v1_on_v2.scalar(scalar_comp)
     return proj_v1_on_v2
 
@@ -190,7 +193,8 @@ def cross_product(v1: Vector, v2: Vector) -> Vector:
     cp_j = -((v1i*v2k)-(v2i*v1k))
     cp_k = (v1i*v2j)-(v2i*v1j)
 
-    cross_product = Vector(cp_i, cp_j, cp_k)
+    cross_product = Vector(
+        f"{v1.name}X{v2.name}", cp_i, cp_j, cp_k)
     return cross_product
 
 def add_vectors(v1: Vector, v2: Vector) -> Vector:
@@ -202,7 +206,8 @@ def add_vectors(v1: Vector, v2: Vector) -> Vector:
     added_j = v1j+v2j
     added_k = v1k+v2k
 
-    added_vector = Vector(added_i, added_j, added_k)
+    added_vector = Vector(
+        f"{v1.name}+{v2.name}", added_i, added_j, added_k)
     return added_vector
 
 def subtract_vectors(v1: Vector, v2: Vector) -> Vector:
@@ -215,6 +220,9 @@ def subtract_vectors(v1: Vector, v2: Vector) -> Vector:
     subtracted_k = v1k-v2k
 
     subtracted_vector = Vector(
-        subtracted_i, subtracted_j, subtracted_k
+        f"{v1.name}-{v2.name}",
+        subtracted_i,
+        subtracted_j,
+        subtracted_k
     )
     return subtracted_vector
